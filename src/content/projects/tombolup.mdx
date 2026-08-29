@@ -1,0 +1,14 @@
+---
+title: "TombolUP"
+description: "A distributed tombola platform for Italian high schools — hundreds of players across dozens of rooms, one fair, synchronized draw."
+status: "live"
+url: "https://tombolup.it"
+tech: ["Java", "Spring Boot", "React", "MySQL", "Firebase"]
+order: 1
+---
+
+I'm from Andria, in Puglia, where the tombola is a Christmas institution — every high school class pools money, buys cards, and plays together on the last day before the break. The problem is scale: get a few hundred students spread across a dozen classrooms and buildings, and running one fair, synchronized game stops being a fun tradition and starts being chaos. I started building TombolUP to fix that, seven years ago now, and I still work on it every Christmas.
+
+It's a multi-tenant platform for student reps to run a distributed tombola across an entire school — every prize tier (ambo, terno, quaterna, cinquina, tombola), a fair random draw when multiple cards win on the same extraction, color-coded cards, sponsor slots for local businesses, and a backoffice to run the whole event. The actual hard part is the distributed-event engine underneath: extractions and wins push live to hundreds of players across classrooms in real time, with no one in the same physical room.
+
+It's grown to a couple of schools in Andria so far, entirely by word of mouth — I've never run a single ad. Under the hood it's Java Spring Boot with MySQL on the backend, a React backoffice and player web app, and Firebase Realtime Database for the live game — nothing to install for something that happens once a year.

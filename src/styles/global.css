@@ -1,0 +1,87 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/jetbrains-mono/latin-400.css";
+@import "@fontsource/jetbrains-mono/latin-500.css";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+html {
+  overflow-y: scroll;
+  color-scheme: dark;
+}
+
+html,
+body {
+  @apply h-full;
+}
+
+body {
+  @apply font-sans antialiased;
+  @apply flex flex-col min-h-screen;
+  @apply bg-black text-white/70;
+}
+
+main {
+  @apply flex-1;
+}
+
+/* Section headers: uppercase, small, letter-spaced, muted */
+.section-heading {
+  @apply font-mono text-xs uppercase tracking-widest text-white/40;
+}
+
+/* Monospace utility for dates and status labels */
+.mono {
+  @apply font-mono;
+}
+
+/* Thin horizontal rule used between sections */
+hr,
+.hr {
+  @apply border-t border-white/10;
+}
+
+/* Underlined links with offset, per spec */
+a.link {
+  @apply underline underline-offset-4 decoration-white/25;
+  @apply hover:decoration-white;
+  @apply transition-colors duration-200 ease-in-out;
+}
+
+article {
+  @apply max-w-full prose prose-invert;
+  @apply prose-headings:font-semibold prose-headings:text-white;
+  @apply prose-a:text-current prose-a:underline prose-a:underline-offset-4;
+  @apply prose-a:decoration-white/25;
+  @apply prose-hr:border-white/10;
+  @apply prose-code:font-mono;
+}
+
+/* Scroll-reveal: fade + rise into place, staggered via --i */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

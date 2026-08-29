@@ -1,0 +1,106 @@
+---
+import Head from "@components/Head.astro";
+import Nav from "@components/Nav.astro";
+import Footer from "@components/Footer.astro";
+import { SITE } from "@consts";
+
+type Props = {
+  title: string;
+  description: string;
+  image?: string;
+};
+
+const { title, description, image } = Astro.props;
+const pageTitle = title.includes(SITE.NAME) ? title : `${title} | ${SITE.NAME}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head title={pageTitle} description={description} image={image} />
+  </head>
+  <body>
+    <Nav />
+    <main class="mx-auto max-w-2xl px-6 py-16 w-full">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // NOTE: Astro's client router only executes a given inline <script>'s
+      // content once per session — identical script text is deduped across
+      // navigations. So this whole file only ever *runs* once. Everything
+      // that needs to happen again on every page (reveal-on-scroll, the
+      // homepage intro) has to live inside the astro:page-load callback
+      // below, since that event itself keeps firing on every navigation —
+      // a per-page <script> (like the old Intro.astro one) would not.
+      let introHasPlayedThisSession = false;
+
+      function revealNow(els: NodeListOf<HTMLElement> | HTMLElement[]) {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (reduceMotion || !("IntersectionObserver" in window)) {
+          els.forEach((el) => el.classList.add("is-visible"));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+        );
+
+        els.forEach((el) => observer.observe(el));
+      }
+
+      function playIntro(overlay: HTMLElement, heroEls: NodeListOf<HTMLElement>) {
+        const phrase = document.getElementById("intro-phrase");
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => phrase?.classList.add("intro-show"));
+        });
+
+        // The name leads: it lifts and fades out first, then the backdrop
+        // dissolves as the page content rises into view underneath it.
+        setTimeout(() => {
+          phrase?.classList.remove("intro-show");
+          phrase?.classList.add("intro-exit");
+
+          setTimeout(() => {
+            overlay.classList.add("intro-hide");
+            revealNow(heroEls);
+            setTimeout(() => overlay.remove(), 700);
+          }, 200);
+        }, 1000);
+      }
+
+      function initPage() {
+        const overlay = document.getElementById("intro-overlay");
+        const heroEls = document.querySelectorAll<HTMLElement>("[data-intro-reveal]");
+        const otherEls = document.querySelectorAll<HTMLElement>(".reveal:not([data-intro-reveal])");
+
+        revealNow(otherEls);
+
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const alreadyShown = introHasPlayedThisSession || sessionStorage.getItem("introShown");
+
+        if (overlay && !alreadyShown && !reduceMotion) {
+          introHasPlayedThisSession = true;
+          sessionStorage.setItem("introShown", "1");
+          playIntro(overlay, heroEls);
+        } else {
+          overlay?.remove();
+          revealNow(heroEls);
+        }
+      }
+
+      document.addEventListener("astro:page-load", initPage);
+    </script>
+  </body>
+</html>

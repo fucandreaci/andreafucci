@@ -1,0 +1,40 @@
+---
+---
+
+<div id="intro-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black">
+  <span id="intro-phrase" class="mono text-xs sm:text-sm uppercase tracking-[0.3em] text-white/80">
+    Andrea Fucci
+  </span>
+</div>
+
+<style>
+  #intro-overlay {
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #intro-overlay.intro-hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #intro-phrase {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #intro-phrase.intro-show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #intro-phrase.intro-exit {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.4s cubic-bezier(0.4, 0, 1, 1),
+      transform 0.4s cubic-bezier(0.4, 0, 1, 1);
+  }
+</style>

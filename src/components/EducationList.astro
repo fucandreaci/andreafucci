@@ -1,0 +1,23 @@
+---
+import { education } from "@data/education";
+---
+
+<ul class="flex flex-col divide-y divide-white/10">
+  {
+    education.map((entry, i) => (
+      <li class="reveal py-4 first:pt-0 space-y-1" style={`--i: ${i}`}>
+        <div class="font-medium text-white">
+          <a href={entry.institutionUrl} target="_blank" rel="noopener noreferrer" class="link">
+            {entry.institution}
+          </a>
+          {" — "}
+          <a href={entry.programUrl} target="_blank" rel="noopener noreferrer" class="link">
+            {entry.program}
+          </a>
+        </div>
+        <div class="mono text-xs text-white/40">{entry.period}</div>
+        <p class="text-sm">{entry.description}</p>
+      </li>
+    ))
+  }
+</ul>

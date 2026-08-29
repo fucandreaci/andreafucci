@@ -1,0 +1,34 @@
+---
+import { Icon } from "astro-icon/components";
+import { SITE } from "@consts";
+
+const iconClass = "text-white/50 hover:text-white transition-colors duration-200 ease-in-out";
+
+const socials = [
+  { name: "lucide:mail", href: `mailto:${SITE.EMAIL}`, label: "Email" },
+  { name: "lucide:github", href: SITE.GITHUB, label: "GitHub" },
+  { name: "lucide:linkedin", href: SITE.LINKEDIN, label: "LinkedIn" },
+  { name: "lucide:instagram", href: SITE.INSTAGRAM, label: "Instagram" },
+];
+---
+
+<footer class="border-t border-white/10 mt-24">
+  <div class="mx-auto max-w-2xl px-6 py-8 flex flex-wrap items-center justify-between gap-4">
+    <p class="text-sm text-white/50">Made in Puglia, shipped from London.</p>
+    <div class="flex items-center gap-4">
+      {
+        socials.map((social) => (
+          <a
+            href={social.href}
+            target={social.href.startsWith("mailto:") ? undefined : "_blank"}
+            rel={social.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+            aria-label={social.label}
+            class={iconClass}
+          >
+            <Icon name={social.name} width={18} height={18} />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,13 @@
+---
+title: "ShiftCare"
+description: "A mobile app I built for my girlfriend, a self-employed home-care nurse in Rome, to replace her shift-tracking chaos of Google Calendar and Excel."
+status: "ongoing"
+tech: ["React Native", "Expo", "Spring Boot", "PostgreSQL"]
+order: 2
+---
+
+My girlfriend is a self-employed home-care nurse in Rome. Every month I watched her juggle shifts across different cooperatives and patients in a spreadsheet, work out hourly rates by hand, then write out a formal report for her accountant one line at a time. Google Calendar plus Excel was the whole system. ShiftCare exists because I couldn't keep watching that happen.
+
+It's a proper mobile SaaS: cooperatives, patients, rates and shifts, all managed from a color-coded monthly calendar, with a report screen that generates a ready-to-paste billing summary per cooperative — the exact format her accountant expects. Rates and totals are snapshotted onto each shift, so a rate change next year never rewrites last year's numbers, and deleting a cooperative or patient just makes it read-only instead of erasing history.
+
+Frontend is React Native and Expo, backend is Spring Boot and PostgreSQL, both talking over Google OAuth. Still early days, and I get feedback from the one user who actually matters.

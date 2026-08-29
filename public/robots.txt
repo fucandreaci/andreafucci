@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://andreafucci.com/sitemap-index.xml

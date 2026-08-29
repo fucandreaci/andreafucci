@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { STATUS_LABELS } from "@consts";
+
+type Props = {
+  projects: CollectionEntry<"projects">[];
+};
+
+const { projects } = Astro.props;
+---
+
+<ul class="flex flex-col divide-y divide-white/10">
+  {
+    projects.map((project, i) => (
+      <li class="reveal py-4 first:pt-0" style={`--i: ${i}`}>
+        <a href={`/projects/${project.id}`} class="group flex flex-col gap-1">
+          <div class="flex items-baseline justify-between gap-4">
+            <span class="font-medium text-white group-hover:underline underline-offset-4 decoration-white/25">
+              {project.data.title}
+            </span>
+            <span class="mono text-xs shrink-0 text-white/40">
+              {STATUS_LABELS[project.data.status]}
+            </span>
+          </div>
+          <p class="text-sm">{project.data.description}</p>
+        </a>
+      </li>
+    ))
+  }
+</ul>

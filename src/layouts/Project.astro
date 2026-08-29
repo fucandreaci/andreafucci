@@ -1,0 +1,49 @@
+---
+import Base from "@layouts/Base.astro";
+import { STATUS_LABELS } from "@consts";
+
+type Props = {
+  title: string;
+  description: string;
+  status: "wip" | "live" | "ongoing" | "paused";
+  url?: string;
+  repo?: string;
+  tech?: string[];
+};
+
+const { title, description, status, url, repo, tech } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <a href="/projects" class="link text-sm">&larr; Back to projects</a>
+
+  <div class="mt-8 mb-10 space-y-3">
+    <div class="flex items-baseline justify-between gap-4">
+      <h1 class="text-2xl font-semibold text-white">{title}</h1>
+      <span class="mono text-xs shrink-0 text-white/40">{STATUS_LABELS[status]}</span>
+    </div>
+    <p class="text-sm">{description}</p>
+
+    {
+      (tech && tech.length > 0) || url || repo ? (
+        <div class="mono text-xs text-white/40 flex flex-wrap items-center gap-x-3 gap-y-1">
+          {tech && tech.length > 0 && <span>{tech.join(" / ")}</span>}
+          {url && (
+            <a class="link" href={url} target="_blank" rel="noopener noreferrer">
+              site
+            </a>
+          )}
+          {repo && (
+            <a class="link" href={repo} target="_blank" rel="noopener noreferrer">
+              repo
+            </a>
+          )}
+        </div>
+      ) : null
+    }
+  </div>
+
+  <article>
+    <slot />
+  </article>
+</Base>

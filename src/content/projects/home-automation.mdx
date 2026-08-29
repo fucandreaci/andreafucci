@@ -1,0 +1,13 @@
+---
+title: "Home automation"
+description: "A FastAPI gateway that bosses around my LED strips, Hue lights and presence sensor so I don't have to."
+status: "ongoing"
+tech: ["Python", "FastAPI", "Raspberry Pi"]
+order: 4
+---
+
+Home Assistant felt like flying a 747 to turn on a desk lamp, so I built my own ground control instead: a small Python + FastAPI service that talks directly to whatever's plugged in around my room — Bluetooth LED strips, a Philips Hue hub, a smart power strip, and a presence-and-light sensor watching over three zones: desk, bed, and bedroom — which is the whole room, so it also covers everything that isn't desk or bed.
+
+The rules themselves are pretty simple: if it's dark out and I'm actually sitting at my desk during working hours, the lamp switches itself on — no more groping for a switch mid-standup. Step away from the room for more than 30 seconds, though, and everything just shuts off. No fade-out, no warning, just gone.
+
+This works great right up until I travel and forget to mention it. My flatmate has stood still in the hallway and watched the bedroom lights flick on by themselves, and I've had to explain over WhatsApp, mid-layover, that no, the flat isn't haunted, it's just a presence sensor with opinions. There's a pause endpoint for exactly this reason — one API call and the ghosts go quiet until I'm home to explain myself properly.

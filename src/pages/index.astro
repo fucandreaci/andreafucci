@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@layouts/Base.astro";
+import ProjectList from "@components/ProjectList.astro";
+import ExperienceList from "@components/ExperienceList.astro";
+import EducationList from "@components/EducationList.astro";
+import Intro from "@components/Intro.astro";
+import { SITE, HOME } from "@consts";
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title={HOME.TITLE} description={HOME.DESCRIPTION}>
+  <Intro />
+  <div class="space-y-16">
+    <section class="space-y-4">
+      <div class="reveal flex items-center gap-4" style="--i: 0" data-intro-reveal>
+        <img
+          src="/andrea-bw.png"
+          alt="Andrea Fucci"
+          width="64"
+          height="64"
+          class="size-16 rounded-full border border-white/10 object-cover"
+        />
+        <div>
+          <h1 class="text-2xl font-semibold text-white">Andrea Fucci</h1>
+          <p class="mono text-xs uppercase tracking-widest text-white/40">
+            Software Engineer, London
+          </p>
+        </div>
+      </div>
+      <p class="reveal max-w-prose" style="--i: 1" data-intro-reveal>
+        I build things with care and curiosity, mostly mobile and web apps, sometimes whatever
+        idea won't leave me alone.
+      </p>
+      <p class="reveal max-w-prose" style="--i: 2" data-intro-reveal>
+        I'm an engineer from Puglia <span aria-hidden="true">🇮🇹</span> living in London{" "}
+        <span aria-hidden="true">🇬🇧</span>. This is where I write, ship things half-finished, and
+        leave a trace of the process.
+      </p>
+      <div class="reveal flex flex-wrap gap-x-4 text-sm" style="--i: 3" data-intro-reveal>
+        <a class="link" href={SITE.GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="link" href={SITE.LINKEDIN} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="link" href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</a>
+      </div>
+    </section>
+
+    <section class="space-y-6">
+      <div class="reveal flex items-baseline justify-between">
+        <h2 class="section-heading">Projects</h2>
+        <a href="/projects" class="link text-sm">All projects</a>
+      </div>
+      <ProjectList projects={projects} />
+    </section>
+
+    <section class="space-y-6">
+      <h2 class="reveal section-heading">Experience</h2>
+      <ExperienceList />
+    </section>
+
+    <section class="space-y-6">
+      <h2 class="reveal section-heading">Education</h2>
+      <EducationList />
+    </section>
+  </div>
+</Base>
